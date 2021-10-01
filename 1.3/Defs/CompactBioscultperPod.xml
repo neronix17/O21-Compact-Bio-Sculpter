@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+	<ThingDef ParentName="BuildingBase">
+		<defName>O21_CompactBiosculpterPod</defName>
+		<label>biosculpter pod (compact)</label>
+		<description>An immersive pod equipped with a biosculpting fluid injector and attached control system. It can perform a variety of biological alterations including age reversal and pleasure-giving. Each pod becomes biotuned to its user, and cannot be used by anyone else. Biotuning resets after 60 days. Believers in transhumanism believe biosculpter pods are of critical importance in their quest to transcend normal human physical limitations.</description>
+		<graphicData>
+			<texPath>CompactBiosculpterPod/BiosculpterPod</texPath>
+			<graphicClass>Graphic_Multi</graphicClass>
+			<drawSize>(2.65, 2.65)</drawSize>
+		</graphicData>
+		<drawerType>MapMeshAndRealTime</drawerType>
+		<drawGUIOverlay>true</drawGUIOverlay>
+		<defaultPlacingRot>South</defaultPlacingRot>
+		<researchPrerequisites>
+			<li>Biosculpting</li>
+		</researchPrerequisites>
+		<altitudeLayer>Building</altitudeLayer>
+		<passability>PassThroughOnly</passability>
+		<pathCost>42</pathCost>
+		<blockWind>true</blockWind>
+		<fillPercent>0.5</fillPercent>
+		<canOverlapZones>false</canOverlapZones>
+		<statBases>
+			<MaxHitPoints>250</MaxHitPoints>
+			<WorkToBuild>28000</WorkToBuild>
+			<Mass>50</Mass>
+			<Flammability>0.5</Flammability>
+			<BiosculpterPodSpeedFactor>1.0</BiosculpterPodSpeedFactor>
+			<Beauty>-3</Beauty>
+		</statBases>
+		<size>(2,2)</size>
+		<interactionCellOffset>(1,0,2)</interactionCellOffset>
+		<hasInteractionCell>true</hasInteractionCell>
+		<costList>
+			<Steel>100</Steel>
+			<Plasteel>10</Plasteel>
+			<ComponentSpacer>1</ComponentSpacer>
+		</costList>
+		<constructionSkillPrerequisite>8</constructionSkillPrerequisite>
+		<building>
+			<destroySound>BuildingDestroyed_Metal_Big</destroySound>
+			<haulToContainerDuration>120</haulToContainerDuration>
+			<fixedStorageSettings>
+				<filter>
+					<categories>
+						<li>Foods</li>
+					</categories>
+					<specialFiltersToDisallow>
+						<li>AllowPlantFood</li>
+					</specialFiltersToDisallow>
+				</filter>
+			</fixedStorageSettings>
+			<defaultStorageSettings>
+				<filter>
+					<categories>
+						<li>Foods</li>
+					</categories>
+					<disallowedCategories>
+						<li>EggsFertilized</li>
+					</disallowedCategories>
+					<disallowedThingDefs>
+						<li>InsectJelly</li>
+						<li>MealLavish</li>
+						<li>MealLavish_Veg</li>
+						<li>MealLavish_Meat</li>
+					</disallowedThingDefs>
+				</filter>
+			</defaultStorageSettings>
+		</building>
+		<designationCategory>Misc</designationCategory>
+		<minifiedDef>MinifiedThing</minifiedDef>
+		<neverMultiSelect>true</neverMultiSelect>
+		<thingCategories>
+			<li>BuildingsMisc</li>
+		</thingCategories>
+		<tickerType>Normal</tickerType>
+		<inspectorTabs>
+			<li>ITab_BiosculpterNutritionStorage</li>
+		</inspectorTabs>
+		<comps>
+			<li Class="CompProperties_Power">
+				<compClass>CompPowerTrader</compClass>
+				<basePowerConsumption>200</basePowerConsumption>
+			</li>
+			<li Class="CompProperties_Flickable"/>
+			<li Class="CompactBioSculpter.CompProperties_CompactBiosculpterPod">
+				<enterSound>BiosculpterPod_Enter</enterSound>
+				<exitSound>BiosculpterPod_Exit</exitSound>
+				<operatingEffecter>BiosculpterPod_Operating</operatingEffecter>
+				<readyEffecter>BiosculpterPod_Ready</readyEffecter>
+			</li>
+			<li Class="CompProperties_BiosculpterPod_HealingCycle">
+				<key>healing</key>
+				<label>healing</label>
+				<description>Heal all fresh wounds and one random permanent injury.</description>
+				<iconPath>UI/Gizmos/BiosculpterCycleHealing</iconPath>
+				<nutritionRequired>20</nutritionRequired>
+				<durationDays>10</durationDays>
+				<operatingColor>(0.554,0.887,1.000)</operatingColor>
+			</li>
+			<li Class="CompProperties_BiosculpterPod_AgeReversalCycle">
+				<key>ageReversal</key>
+				<label>age reversal</label>
+				<description>Reverse one year of aging.</description>
+				<iconPath>UI/Gizmos/BiosculpterCycleAgeReversal</iconPath>
+				<nutritionRequired>20</nutritionRequired>
+				<durationDays>10</durationDays>
+				<gainThoughtOnCompletion>AgeReversalReceived</gainThoughtOnCompletion>
+				<operatingColor>(1.000,0.585,0.158)</operatingColor>
+			</li>
+			<li Class="CompProperties_BiosculpterPod_PleasureCycle">
+				<key>pleasure</key>
+				<label>pleasure</label>
+				<description>Temporarily reshape the nervous system to deliver elevated levels of happiness for a time.</description>
+				<iconPath>UI/Gizmos/BiosculpterCyclePleasure</iconPath>
+				<nutritionRequired>5</nutritionRequired>
+				<durationDays>4</durationDays>
+				<operatingColor>(1.000,0.918,0.000)</operatingColor>
+			</li>
+		</comps>
+		<placeWorkers>
+			<li>PlaceWorker_PreventInteractionSpotOverlap</li>
+		</placeWorkers>
+	</ThingDef>
+
+	<WorkGiverDef>
+		<defName>O21_HaulToCompactBiosculpterPod</defName>
+		<label>carry to biosculpter pod</label>
+		<giverClass>CompactBioSculpter.WorkGiver_HaulToCompactBiosculpterPod</giverClass>
+		<workType>Hauling</workType>
+		<verb>fill</verb>
+		<gerund>filling</gerund>
+		<priorityInType>109</priorityInType>
+		<requiredCapacities>
+			<li>Manipulation</li>
+		</requiredCapacities>
+	</WorkGiverDef>
+
+</Defs>
